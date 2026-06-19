@@ -12,14 +12,6 @@ include(
     ":core",
 
     "nms:abstraction",
-
-    "nms:spigot:v1_12_2",
-    "nms:spigot:v1_13",
-    "nms:spigot:v1_16_5",
-    "nms:spigot:v1_21_3",
-
-    "nms:paper:v1_16_5",
-    "nms:paper:v1_21_3",
     "nms:paper:v1_21_4",
 
     ":hooks:worldguard",

@@ -16,13 +16,14 @@ Compatibility
 
 |                       |          Support           |
 |-----------------------|:--------------------------:|
-| Java Version          |          `>= 21`           |  
-| Minecraft Version     |      1.12.2 ~ 26.1.2       |
-| Compatibility         | Spigot / Paper / Forks / * |
+| Java Version          |          `>= 25`           |  
+| Minecraft Version     |      26.1.2 ~ 26.2         |
+| Compatibility         |     Paper / Forks / *      |
 | Folia Support         |            Yes             |
 | Multi Plugins Support |            Yes             |
 
 - *Compatibility for Forge / Bukkit Hybrid Server Software is limited, if there is an issue, report!
+- Spigot support was dropped after Paper/Folia moved to Java 25 (26.1.x+). Use Paper or a Paper fork.
 
 ## Portals
 
@@ -49,7 +50,7 @@ Please feel free to contribute or modify existing translations if they are not r
 
 ## Building
 
-- Use Java 21
+- Use Java 25
 - Open your IDE, recommended to use IntelliJ IDEA
 - Build the plugin with: `./gradlew clean build`
 

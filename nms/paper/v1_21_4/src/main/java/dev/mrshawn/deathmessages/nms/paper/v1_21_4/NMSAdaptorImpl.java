@@ -1,12 +1,78 @@
 package dev.mrshawn.deathmessages.nms.paper.v1_21_4;
 
+import dev.mrshawn.deathmessages.nms.NMSAdaptor;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.GameRules;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class NMSAdaptorImpl extends dev.mrshawn.deathmessages.nms.paper.v1_21_3.NMSAdaptorImpl {
+public class NMSAdaptorImpl implements NMSAdaptor {
+
+    private static final ConsoleCommandSender CONSOLE = Bukkit.getConsoleSender();
+
+    @Override
+    public void sendMessage(CommandSender sender, Component message) {
+        sender.sendMessage(message);
+    }
+
+    @Override
+    public void sendMessage(Player player, Component message) {
+        player.sendMessage(message);
+    }
+
+    @Override
+    public void sendConsoleMessage(Component message) {
+        CONSOLE.sendMessage(message);
+    }
+
+    @Override
+    public void adventure(Object instance) {
+    }
+
+    @Override
+    public void shutdownAdventure() {
+    }
+
+    @Override
+    public BukkitAudiences adventure() {
+        return null;
+    }
 
     @Override
     public Component itemDisplayName(ItemStack i) {
         return i.effectiveName();
+    }
+
+    @Override
+    public HoverEvent<HoverEvent.ShowItem> itemHoverEvent(ItemStack i) {
+        return i.asHoverEvent();
+    }
+
+    @Override
+    public Component entityCustomName(Entity entity) {
+        return entity.customName();
+    }
+
+    @Override
+    public boolean showDeathMessages(World world) {
+        return Boolean.TRUE.equals(world.getGameRuleValue(GameRules.SHOW_DEATH_MESSAGES));
+    }
+
+    @Override
+    public void showDeathMessages(World world, boolean show) {
+        world.setGameRule(GameRules.SHOW_DEATH_MESSAGES, show);
+    }
+
+    @Override
+    public String biomeKeyName(Biome biome) {
+        return biome.key().value();
     }
 }

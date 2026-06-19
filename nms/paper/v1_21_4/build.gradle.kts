@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    compileOnly(project(":nms:paper:v1_21_3"))
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    api(project(":nms:abstraction"))
+    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
 
     compileOnly(libs.bundles.adventure)
 }

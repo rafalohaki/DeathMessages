@@ -8,7 +8,7 @@ dependencies {
     implementation(project(":hooks:worldguard"))
     implementation(project(":nms:abstraction"))
 
-    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT") // Latest
+    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+") // Latest (Paper 26.1.2, Java 25)
     compileOnly(libs.common.io) // Remove this
     compileOnly(libs.log4j.api)
     compileOnlyApi(libs.jspecify)
@@ -39,16 +39,7 @@ tasks {
         from(project(":hooks:worldguard7").sourceSets.main.get().output)
 
         // NMS for Paper
-        //from(project(":nms:paper:v1_12_2").sourceSets.main.get().output)
-        from(project(":nms:paper:v1_16_5").sourceSets.main.get().output)
-        from(project(":nms:paper:v1_21_3").sourceSets.main.get().output)
         from(project(":nms:paper:v1_21_4").sourceSets.main.get().output)
-
-        // NMS for Spigot
-        from(project(":nms:spigot:v1_12_2").sourceSets.main.get().output)
-        from(project(":nms:spigot:v1_13").sourceSets.main.get().output)
-        from(project(":nms:spigot:v1_16_5").sourceSets.main.get().output)
-        from(project(":nms:spigot:v1_21_3").sourceSets.main.get().output)
 
         exclude("META-INF/**") // Dreeam - Avoid to include META-INF/maven in Jar
 //            minimize {
@@ -83,7 +74,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.20.4")
+        minecraftVersion("1.21.11")
     }
 }
 

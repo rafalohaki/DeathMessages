@@ -1,7 +1,6 @@
 package dev.mrshawn.deathmessages.nms;
 
 import dev.mrshawn.deathmessages.DeathMessages;
-import dev.mrshawn.deathmessages.utils.PlatformUtil;
 import dev.mrshawn.deathmessages.utils.Util;
 import org.jspecify.annotations.Nullable;
 import org.bukkit.Bukkit;
@@ -13,36 +12,9 @@ public class NMSProvider {
     private static NMSAdaptor instance;
 
     public static void initNMS() {
-        final String instClassPath;
-        if (PlatformUtil.IS_PAPER) {
-            if (PlatformUtil.isNewerAndEqual(21, 4)) {
-                instClassPath = "paper.v1_21_4";
-            } else if (PlatformUtil.isNewerAndEqual(21, 3)) {
-                instClassPath = "paper.v1_21_3";
-            } else if (PlatformUtil.isNewerAndEqual(16, 5)) {
-                instClassPath = "paper.v1_16_5";
-            } else if (PlatformUtil.isNewerAndEqual(13, 0)) { // Just use Spigot impl for <= Paper 1.16.5
-                instClassPath = "spigot.v1_13";
-            } else if (PlatformUtil.isNewerAndEqual(12, 2)) {
-                instClassPath = "spigot.v1_12_2";
-            } else {
-                // TODO - Whether need to support lower?
-                throw new UnsupportedOperationException();
-            }
-        } else {
-            if (PlatformUtil.isNewerAndEqual(21, 3)) {
-                instClassPath = "spigot.v1_21_3";
-            } else if (PlatformUtil.isNewerAndEqual(16, 5)) {
-                instClassPath = "spigot.v1_16_5";
-            } else if (PlatformUtil.isNewerAndEqual(13, 0)) {
-                instClassPath = "spigot.v1_13";
-            } else if (PlatformUtil.isNewerAndEqual(12, 2)) {
-                instClassPath = "spigot.v1_12_2";
-            } else {
-                // TODO - Whether need to support lower?
-                throw new UnsupportedOperationException();
-            }
-        }
+        // Paper / Folia 26.x (CalVer) and above use a single, reflection-free
+        // adaptor backed by stable Paper API only.
+        final String instClassPath = "paper.v1_21_4";
 
         try {
             instance = (NMSAdaptor) Class.forName(Util.NMS_PACKAGE_PREFIX_NAME + instClassPath + ".NMSAdaptorImpl").getConstructor().newInstance();
