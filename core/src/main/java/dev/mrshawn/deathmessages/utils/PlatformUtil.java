@@ -19,10 +19,28 @@ public class PlatformUtil {
         Sakamoto Util
         Cute Sakamoto helps you to process versions =w=
      */
-    private final static String[] serverVersion = getServerVersion();
-    private final static int majorVersion = Integer.parseInt(serverVersion[0]);
-    private final static int minorVersion = Integer.parseInt(serverVersion[1]);
-    private final static int patchVersion = serverVersion.length == 3 ? Integer.parseInt(serverVersion[2]) : 0;
+    private final static String[] serverVersion;
+    private final static int majorVersion;
+    private final static int minorVersion;
+    private final static int patchVersion;
+
+    static {
+        String[] parsedVersion;
+        int parsedMajor = 0, parsedMinor = 0, parsedPatch = 0;
+        try {
+            parsedVersion = getServerVersion();
+            parsedMajor = Integer.parseInt(parsedVersion[0]);
+            parsedMinor = Integer.parseInt(parsedVersion[1]);
+            parsedPatch = parsedVersion.length == 3 ? Integer.parseInt(parsedVersion[2]) : 0;
+        } catch (final Throwable throwable) {
+            DeathMessages.LOGGER.error("Failed to parse server version; version comparison will default to 0.0.0", throwable);
+            parsedVersion = new String[]{"0", "0", "0"};
+        }
+        serverVersion = parsedVersion;
+        majorVersion = parsedMajor;
+        minorVersion = parsedMinor;
+        patchVersion = parsedPatch;
+    }
 
     // > (major, minor, patch)
     public static boolean isNewerThan(int major, int minor, int patch) {
@@ -89,33 +107,40 @@ public class PlatformUtil {
     }
 
     // New server version schema
-    // Paper:
-    // 26.1.local-SNAPSHOT -> {"26","1","0"}
-    // 26.1.build.9-alpha -> {"26","1","0"}
-    // Spigot:
-    // 26.1-R0.1-SNAPSHOT -> {"26","1","0"}
-    // Old server version schema
-    // Paper / Spigot:
-    // 1.20.2-R0.1-SNAPSHOT -> {"1","20","2"}
+    // Paper / Folia / Canvas:
+    //   getMinecraftVersion() -> "26.2" or "1.21.11" (clean, no build suffix)
+    //   getBukkitVersion()    -> "26.2.build.821-alpha" or "1.21.11-R0.1-SNAPSHOT"
+    //
+    // We prefer Server#getMinecraftVersion() (Paper/Folia 1.20.5+, returns clean
+    // Minecraft version without build suffixes) and fall back to getBukkitVersion()
+    // with manual stripping for older Bukkit/Spigot.
     private static String[] getServerVersion() {
-        String version = Bukkit.getServer().getBukkitVersion();
+        String version;
 
-        final int dashIndex = version.indexOf('-');
+        // Try the clean Paper/Folia API first (available since Paper 1.20.5+).
+        try {
+            version = Bukkit.getServer().getMinecraftVersion();
+        } catch (final NoSuchMethodError | UnknownError ignored) {
+            // Pre-1.20.5 Bukkit/Spigot — fall back to the legacy, messier source.
+            version = Bukkit.getServer().getBukkitVersion();
 
-        // Strip after "-"
-        if (dashIndex != -1) {
-            version = version.substring(0, dashIndex);
-        }
+            final int dashIndex = version.indexOf('-');
 
-        // Process Paper's version schema
-        if (PlatformUtil.IS_PAPER) {
-            final int buildIndex = version.indexOf(".build");
-            if (buildIndex != -1) {
-                version = version.substring(0, buildIndex);
-            } else {
-                final int localIndex = version.indexOf(".local");
-                if (localIndex != -1) {
-                    version = version.substring(0, localIndex);
+            // Strip after "-"
+            if (dashIndex != -1) {
+                version = version.substring(0, dashIndex);
+            }
+
+            // Process Paper's version schema
+            if (PlatformUtil.IS_PAPER) {
+                final int buildIndex = version.indexOf(".build");
+                if (buildIndex != -1) {
+                    version = version.substring(0, buildIndex);
+                } else {
+                    final int localIndex = version.indexOf(".local");
+                    if (localIndex != -1) {
+                        version = version.substring(0, localIndex);
+                    }
                 }
             }
         }
