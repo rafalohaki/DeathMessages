@@ -59,10 +59,9 @@ public class PluginMessaging implements PluginMessageListener {
                     PlayerCtx playerCtx = PlayerCtx.of(onlinePlayer.getUniqueId());
                     if (playerCtx != null) {
                         if (playerCtx.isMessageEnabled()) {
-                            ComponentUtil.sendMessage(onlinePlayer, Component.text()
+                            ComponentUtil.sendMessage(onlinePlayer, Component.empty()
                                     .append(prefix)
-                                    .append(message)
-                                    .build());
+                                    .append(message));
                         }
                     }
                 }

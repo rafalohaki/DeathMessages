@@ -40,7 +40,7 @@ public class CommandDiscordLog extends DeathMessagesCommand {
             discordToken = "Discord Jar Not Installed";
         }
 
-        TextComponent discordConfig = Component.text()
+        Component discordConfig = Component.empty()
                 .append(Component.newline())
                 .append(Component.text("  Enabled: ", NamedTextColor.GREEN))
                 .append(Component.text(FileStore.CONFIG.getBoolean(Config.HOOKS_DISCORD_ENABLED), NamedTextColor.RED)).append(Component.newline())
@@ -64,8 +64,7 @@ public class CommandDiscordLog extends DeathMessagesCommand {
                 .append(Component.text("    Entity-Enabled: ", NamedTextColor.GREEN))
                 .append(Component.text(FileStore.CONFIG.getBoolean(Config.HOOKS_DISCORD_CHANNELS_ENTITY_ENABLED), NamedTextColor.RED)).append(Component.newline())
                 .append(Component.text("    Entity-Channels:", NamedTextColor.GREEN)).append(Component.newline())
-                .append(Component.text("      - " + String.join("\n      - ", FileStore.CONFIG.getStringList(Config.HOOKS_DISCORD_CHANNELS_ENTITY_CHANNELS))))
-                .build();
+                .append(Component.text("      - " + String.join("\n      - ", FileStore.CONFIG.getStringList(Config.HOOKS_DISCORD_CHANNELS_ENTITY_CHANNELS))));
 
         Messages.getInstance().getConfig().getStringList("Commands.DeathMessages.Sub-Commands.DiscordLog")
                 .stream()

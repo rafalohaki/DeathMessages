@@ -44,14 +44,14 @@ public class CommandVersion extends DeathMessagesCommand {
                 ComponentUtil.sendMessage(sender, Component.text("Great! You are using the latest version.", NamedTextColor.GREEN));
                 break;
             case 1:
-                ComponentUtil.sendMessage(sender, Component.text().append(Component.text("Find a new version! Click to download: https://github.com/Winds-Studio/DeathMessages/releases", NamedTextColor.YELLOW))
-                        .appendNewline()
-                        .append(Component.text()
+                ComponentUtil.sendMessage(sender, Component.empty()
+                        .append(Component.text("Find a new version! Click to download: https://github.com/Winds-Studio/DeathMessages/releases", NamedTextColor.YELLOW))
+                        .append(Component.newline())
+                        .append(Component.empty()
                                 .append(Component.text("Current Version: ", NamedTextColor.YELLOW))
                                 .append(Component.text(Updater.nowVer))
                                 .append(Component.text(" | Latest Version: ", NamedTextColor.YELLOW))
-                                .append(Component.text(Updater.latest))
-                                .build()).build());
+                                .append(Component.text(Updater.latest))));
                 break;
             case -1:
                 ComponentUtil.sendMessage(sender, Component.text("Failed to check update!", NamedTextColor.RED));

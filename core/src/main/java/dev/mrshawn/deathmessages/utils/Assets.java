@@ -270,7 +270,7 @@ public class Assets {
         }
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
@@ -282,7 +282,7 @@ public class Assets {
                         : fb.getMaterial().toString().toLowerCase();
                 String configValue = Messages.getInstance().getConfig().getString("Blocks." + material);
 
-                base.append(Util.convertFromLegacy(msg.replaceAll("%block%", configValue)));
+                base = base.append(Util.convertFromLegacy(msg.replaceAll("%block%", configValue)));
             } catch (NullPointerException e) {
                 DeathMessages.LOGGER.error("Could not parse %block%. Please check your config for a wrong value." +
                         " Your materials could be spelt wrong or it does not exists in the config. Open a issue if you need help, " + "https://github.com/Winds-Studio/DeathMessages/issues");
@@ -294,7 +294,7 @@ public class Assets {
                 String material = playerCtx.getLastClimbing().toString().toLowerCase();
                 String configValue = Messages.getInstance().getConfig().getString("Blocks." + material);
 
-                base.append(Util.convertFromLegacy(msg.replaceAll("%climbable%", configValue)));
+                base = base.append(Util.convertFromLegacy(msg.replaceAll("%climbable%", configValue)));
             } catch (NullPointerException e) {
                 playerCtx.setLastClimbing(null);
                 return getNaturalDeath(playerCtx, getSimpleCause(EntityDamageEvent.DamageCause.FALL));
@@ -330,13 +330,13 @@ public class Assets {
             TextComponent message = Util.convertFromLegacy(msg);
             Component weapon = ComponentUtil.buildItemHover(playerCtx.getPlayer(), i, displayName);
 
-            base.append(message.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weapon).build()));
+            base = base.append(message.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weapon).build()));
         } else {
             TextComponent message = Util.convertFromLegacy(msg);
-            base.append(message);
+            base = base.append(message);
         }
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -378,7 +378,7 @@ public class Assets {
         }
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
@@ -403,13 +403,13 @@ public class Assets {
             TextComponent deathMessage = Util.convertFromLegacy(msg);
             Component weaponHover = ComponentUtil.buildItemHover(playerCtx.getPlayer(), i, displayName);
 
-            base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
+            base = base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
         } else {
             TextComponent deathMessage = Util.convertFromLegacy(msg);
-            base.append(deathMessage);
+            base = base.append(deathMessage);
         }
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -450,7 +450,7 @@ public class Assets {
         }
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
@@ -462,7 +462,7 @@ public class Assets {
                     if (!Settings.getInstance().getConfig().getBoolean(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_IGNORE_ENCHANTMENTS.getPath())) {
                         if (i.getEnchantments().isEmpty()) {
                             return getEntityDeath(p, e,
-                                    Settings.getInstance().getConfig().getString(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_SOURCE_WEAPON_DEFAULT_TO.getPath()), mobType);
+                                     Settings.getInstance().getConfig().getString(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_SOURCE_WEAPON_DEFAULT_TO.getPath()), mobType);
                         }
                     } else {
                         return getEntityDeath(p, e,
@@ -477,13 +477,13 @@ public class Assets {
             TextComponent deathMessage = Util.convertFromLegacy(msg);
             Component weaponHover = ComponentUtil.buildItemHover(p, i, displayName);
 
-            base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
+            base = base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
         } else {
             TextComponent deathMessage = Util.convertFromLegacy(msg);
-            base.append(deathMessage);
+            base = base.append(deathMessage);
         }
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -533,13 +533,13 @@ public class Assets {
         }
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
-        base.append(Util.convertFromLegacy(msg));
+        base = base.append(Util.convertFromLegacy(msg));
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -586,7 +586,7 @@ public class Assets {
         }
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
@@ -625,13 +625,13 @@ public class Assets {
             }
 
             TextComponent deathMessage = Util.convertFromLegacy(msg);
-            base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
+            base = base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
         } else {
             TextComponent deathMessage = Util.convertFromLegacy(msg);
-            base.append(deathMessage);
+            base = base.append(deathMessage);
         }
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -675,7 +675,7 @@ public class Assets {
         }
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
@@ -710,13 +710,13 @@ public class Assets {
             }
 
             TextComponent deathMessage = Util.convertFromLegacy(msg);
-            base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
+            base = base.append(deathMessage.replaceText(TextReplacementConfig.builder().matchLiteral("%weapon%").replacement(weaponHover).build()));
         } else {
             TextComponent deathMessage = Util.convertFromLegacy(msg);
-            base.append(deathMessage);
+            base = base.append(deathMessage);
         }
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -762,19 +762,19 @@ public class Assets {
 
         String msg = (msgs.size() > 1) ? msgs.get(ThreadLocalRandom.current().nextInt(msgs.size())) : msgs.getFirst();
 
-        TextComponent.Builder base = Component.text();
+        Component base = Component.empty();
 
         if (Settings.getInstance().getConfig().getBoolean(Config.ADD_PREFIX_TO_ALL_MESSAGES.getPath())) {
             TextComponent prefix = Util.convertFromLegacy(Messages.getInstance().getConfig().getString("Prefix"));
-            base.append(prefix);
+            base = base.append(prefix);
         }
 
         List<String> rawEvents = new ArrayList<>();
         msg = ComponentUtil.sortHoverEvents(msg, rawEvents);
 
-        base.append(Util.convertFromLegacy(msg));
+        base = base.append(Util.convertFromLegacy(msg));
 
-        Component baseWithEvents = base.build();
+        Component baseWithEvents = base;
 
         if (!rawEvents.isEmpty()) {
             int index = 0;
@@ -786,7 +786,7 @@ public class Assets {
             }
         }
 
-        return (TextComponent) entityDeathPlaceholders(base.build(), player, e, hasOwner);
+        return (TextComponent) entityDeathPlaceholders(baseWithEvents, player, e, hasOwner);
     }
 
     /*

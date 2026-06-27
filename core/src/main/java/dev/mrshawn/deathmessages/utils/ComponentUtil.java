@@ -98,15 +98,15 @@ public class ComponentUtil {
     ) {
         rawEvent = rawEvent.replace("[", "").replace("]", "");
         String[] rawHover = rawEvent.split("::");
-        TextComponent.Builder event = Component.text();
+        Component event = Component.empty();
 
         // Append base message which has the hover text and events
-        event.append(Util.convertFromLegacy(rawHover[0]));
+        event = event.append(Util.convertFromLegacy(rawHover[0]));
 
         // Append hover text if exists
         if (rawHover.length >= 2 && !rawHover[1].isEmpty()) {
             HoverEvent<Component> showText = HoverEvent.showText(Util.convertFromLegacy(rawHover[1]));
-            event.hoverEvent(showText);
+            event = event.hoverEvent(showText);
         }
 
         // Append hover click events if exists
@@ -134,10 +134,10 @@ public class ComponentUtil {
                     break;
             }
 
-            event.clickEvent(click);
+            event = event.clickEvent(click);
         }
 
-        return event.build();
+        return event;
     }
 
     public static Component getItemStackDisplayName(ItemStack i) {
